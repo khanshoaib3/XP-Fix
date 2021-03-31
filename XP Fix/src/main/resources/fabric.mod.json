@@ -1,16 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "xpfixbyshoaibkhan",
   "version": "${version}",
 
-  "name": "Example Mod",
+  "name": "XP Fix",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "Shoaib khan"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://fabricmc.net/"
   },
 
   "license": "CC0-1.0",
@@ -19,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.shoaibkhan.xpfix.ClientMod"
     ]
   },
   "mixins": [
