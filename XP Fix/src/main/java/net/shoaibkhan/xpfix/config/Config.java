@@ -133,8 +133,8 @@ public class Config {
         data = new JsonObject();
         //data.add(Health_n_Hunger_Key, new JsonPrimitive(true));
         data.add(XP_Fix_key, new JsonPrimitive(true));
-        data.add(XP_Fix_Position_X_Key,new JsonPrimitive("48"));
-        data.add(XP_Fix_Position_Y_Key,new JsonPrimitive("90"));
+        data.add(XP_Fix_Position_X_Key,new JsonPrimitive("center"));
+        data.add(XP_Fix_Position_Y_Key,new JsonPrimitive("40"));
 
         saveConfig(data);
         return data;

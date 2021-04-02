@@ -12,6 +12,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 
+import java.util.Locale;
+
 @Mixin(InGameHud.class)
 public class XPMixin {
 
@@ -41,9 +43,19 @@ public class XPMixin {
 
 				float nn = (int) height - reqHeight;
 				float mm = 222;
+				String st = Config.getString(Config.getXpFixPositionXKey());
+				st = st.toLowerCase().trim();
 
-				if(Config.getString(Config.getXpFixPositionXKey()).equalsIgnoreCase("center")||Config.getString(Config.getXpFixPositionXKey()).equalsIgnoreCase("centre")){
+				if(st.equalsIgnoreCase("center")||st.equalsIgnoreCase("centre")){
 					mm = (width - client.inGameHud.getFontRenderer().getWidth(string))/2;
+				} else if(st.contains("offset")) {
+					st = st.replace("offset","");
+					if(st.contains(":")) st = st.replace(":","");
+					try{
+						mm = ((width - client.inGameHud.getFontRenderer().getWidth(string)) / 2) + Float.parseFloat(st);
+					} catch (Exception e){
+						mm = ((width - client.inGameHud.getFontRenderer().getWidth(string)) / 2) + 0;
+					}
 				} else {
 					try{
 						reqWidth = Float.parseFloat(Config.getString(Config.getXpFixPositionXKey()));
