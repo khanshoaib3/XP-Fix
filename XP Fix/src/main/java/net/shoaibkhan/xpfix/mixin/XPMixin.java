@@ -19,6 +19,7 @@ public class XPMixin {
 
 	@Inject(at =  @At(value = "INVOKE", target="Lnet/minecraft/client/font/TextRenderer;getWidth(Ljava/lang/String;)I"), method = "renderExperienceBar",cancellable = true)
 	private void init(MatrixStack matrixStack,int x, CallbackInfo info) {
+		Config.loadConfig();
 		if(Config.get(Config.getXpFixKey())) {
 			MinecraftClient client = MinecraftClient.getInstance();
 			matrixStack = new MatrixStack();
@@ -72,7 +73,6 @@ public class XPMixin {
 				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) mm, (float) (nn - 1), 0);
 				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) mm, (float) nn, 8453920);
 				matrixStack.pop();
-				Config.loadConfig();
 			}
 
 			info.cancel();

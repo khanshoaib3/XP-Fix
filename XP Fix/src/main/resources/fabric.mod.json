@@ -4,16 +4,16 @@
   "version": "${version}",
 
   "name": "XP Fix",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "This adds flexibility to the in-game xp overlay!",
   "authors": [
     "Shoaib khan"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/"
+    "homepage": "https://github.com/shoaib11120/"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "",
 
   "environment": "*",
   "entrypoints": {
