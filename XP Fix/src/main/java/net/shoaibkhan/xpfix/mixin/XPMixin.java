@@ -2,6 +2,8 @@ package net.shoaibkhan.xpfix.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import io.github.cottonmc.cotton.gui.widget.data.Color;
+import net.shoaibkhan.xpfix.ClientMod;
 import net.shoaibkhan.xpfix.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,22 +34,39 @@ public class XPMixin {
 				int height = client.getWindow().getScaledHeight();
 				int width = client.getWindow().getScaledWidth();
 
-				float reqHeight = 40;
-				try{
-					reqHeight = Float.parseFloat(Config.getString(Config.getXpFixPositionYKey()));
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("An error occures:\t"+e.getMessage());
-					reqHeight = 40;
-				}
-				float reqWidth = 50;
+				float nn = 222;
+				float reqHeight = 50;
+				String st1 = Config.getString(Config.getXpFixPositionYKey());
+				st1 = st1.toLowerCase().trim();
 
-				float nn = (int) height - reqHeight;
+				if(st1.contains("center")||st1.contains("centre")){
+					nn = (height - client.inGameHud.getFontRenderer().getStringBoundedHeight(string,client.inGameHud.getFontRenderer().getWidth(string)))/2;
+				} else if(st1.contains("offset")) {
+					st1 = st1.replace("offset","");
+					if(st1.contains(":")) st1 = st1.replace(":","");
+					try{
+						nn = ((height - client.inGameHud.getFontRenderer().getStringBoundedHeight(string,client.inGameHud.getFontRenderer().getWidth(string))) / 2) + Float.parseFloat(st1);
+					} catch (Exception e){
+						nn = ((height - client.inGameHud.getFontRenderer().getStringBoundedHeight(string,client.inGameHud.getFontRenderer().getWidth(string))) / 2) + 0;
+					}
+				} else {
+					try{
+						reqHeight = Float.parseFloat(Config.getString(Config.getXpFixPositionYKey()));
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("An error occures:\t"+e.getMessage());
+						reqHeight = 40;
+					}
+					nn = (int) ( height - reqHeight );
+				}
+
+
 				float mm = 222;
+				float reqWidth = 50;
 				String st = Config.getString(Config.getXpFixPositionXKey());
 				st = st.toLowerCase().trim();
 
-				if(st.equalsIgnoreCase("center")||st.equalsIgnoreCase("centre")){
+				if(st.contains("center")||st.contains("centre")){
 					mm = (width - client.inGameHud.getFontRenderer().getWidth(string))/2;
 				} else if(st.contains("offset")) {
 					st = st.replace("offset","");
@@ -67,11 +86,23 @@ public class XPMixin {
 					}
 					mm = (int) (( width * reqWidth / 100 ) + client.inGameHud.getFontRenderer().getWidth(string));
 				}
-				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) (mm + 1), (float) nn, 0);
-				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) (mm - 1), (float) nn, 0);
-				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) mm, (float) (nn + 1), 0);
-				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) mm, (float) (nn - 1), 0);
-				client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) mm, (float) nn, 8453920);
+
+				int opacity = 100;
+
+				try{
+					opacity = Integer.parseInt(Config.getString(Config.getXP_Fix_Opacity_key()));
+				} catch (Exception e){
+					opacity = 100;
+				}
+				String color = Config.getString(Config.getXP_Fix_Color_Key());
+				color = color.toLowerCase().trim();
+				if(!color.contains("transparent")){
+					client.inGameHud.getFontRenderer().draw(matrixStack, (String)string, (float)(mm + 1), (float)nn, ClientMod.colors("0",opacity));
+					client.inGameHud.getFontRenderer().draw(matrixStack, (String)string, (float)(mm - 1), (float)nn, ClientMod.colors("0",opacity));
+					client.inGameHud.getFontRenderer().draw(matrixStack, (String)string, (float)mm, (float)(nn + 1), ClientMod.colors("0",opacity));
+					client.inGameHud.getFontRenderer().draw(matrixStack, (String)string, (float)mm, (float)(nn - 1), ClientMod.colors("0",opacity));
+					client.inGameHud.getFontRenderer().draw(matrixStack, string, (float) mm, (float) nn, ClientMod.colors(color,opacity));
+				}
 				matrixStack.pop();
 			}
 

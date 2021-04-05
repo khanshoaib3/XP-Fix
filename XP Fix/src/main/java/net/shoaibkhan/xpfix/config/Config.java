@@ -13,7 +13,20 @@ import java.io.FileWriter; // Import the FileWriter class
 public class Config {
     private static JsonObject data;
     private static String CONFIG_PATH = Paths.get("config", "xpfix", "config.json").toString();
-    public static final String XP_Fix_key = "xp_fix_key",XP_Fix_Position_X_Key="xp_fix_position_x_key",XP_Fix_Position_Y_Key="xp_fix_position_y_key";
+    public static final String XP_Fix_key = "status";
+    public static final String XP_Fix_Position_X_Key="position_x";
+    public static final String XP_Fix_Position_Y_Key="position_y";
+    public static final String XP_Fix_Color_Key = "color";
+
+    public static String getXP_Fix_Color_Key() {
+        return XP_Fix_Color_Key;
+    }
+
+    public static String getXP_Fix_Opacity_key() {
+        return XP_Fix_Opacity_key;
+    }
+
+    public static final String XP_Fix_Opacity_key="color_opacity";
     
 
     public Config() {
@@ -135,6 +148,8 @@ public class Config {
         data.add(XP_Fix_key, new JsonPrimitive(true));
         data.add(XP_Fix_Position_X_Key,new JsonPrimitive("center"));
         data.add(XP_Fix_Position_Y_Key,new JsonPrimitive("40"));
+        data.add(XP_Fix_Color_Key,new JsonPrimitive("default"));
+        data.add(XP_Fix_Opacity_key,new JsonPrimitive("100"));
 
         saveConfig(data);
         return data;
