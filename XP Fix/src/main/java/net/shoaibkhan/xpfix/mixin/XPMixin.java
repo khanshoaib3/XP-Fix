@@ -19,7 +19,7 @@ import java.util.Locale;
 @Mixin(InGameHud.class)
 public class XPMixin {
 
-	@Inject(at =  @At(value = "INVOKE", target="Lnet/minecraft/client/font/TextRenderer;getWidth(Ljava/lang/String;)I"), method = "renderExperienceBar",cancellable = true)
+  @Inject(at =  @At(value = "INVOKE", target="Lnet/minecraft/client/font/TextRenderer;getWidth(Ljava/lang/String;)I"), method = "renderExperienceBar",cancellable = true)
 	private void init(MatrixStack matrixStack,int x, CallbackInfo info) {
 		Config.loadConfig();
 		if(Config.get(Config.getXpFixKey())) {
@@ -40,12 +40,12 @@ public class XPMixin {
 				st1 = st1.toLowerCase().trim();
 
 				if(st1.contains("center")||st1.contains("centre")){
-					nn = (height - client.inGameHud.getFontRenderer().getStringBoundedHeight(string,client.inGameHud.getFontRenderer().getWidth(string)))/2;
+					nn = (height - client.inGameHud.getTextRenderer().(string,client.inGameHud.getTextRenderer().getWidth(string)))/2;
 				} else if(st1.contains("offset")) {
 					st1 = st1.replace("offset","");
 					if(st1.contains(":")) st1 = st1.replace(":","");
 					try{
-						nn = ((height - client.inGameHud.getFontRenderer().getStringBoundedHeight(string,client.inGameHud.getFontRenderer().getWidth(string))) / 2) + Float.parseFloat(st1);
+						nn = ((height - client.inGameHud.getTextRenderer().getStringBoundedHeight(string,client.inGameHud.getTextRenderer().getWidth(string))) / 2) + Float.parseFloat(st1);
 					} catch (Exception e){
 						nn = ((height - client.inGameHud.getFontRenderer().getStringBoundedHeight(string,client.inGameHud.getFontRenderer().getWidth(string))) / 2) + 0;
 					}
